@@ -6,7 +6,8 @@
 
 @layer base {
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { @apply bg-blush-50 text-blush-950 font-sans antialiased; }
+  body { @apply overflow-x-hidden bg-blush-50 text-blush-950 font-sans antialiased; }
+  img, video, iframe { max-width: 100%; }
   ::selection { @apply bg-champagne-200 text-blush-950; }
 }
 
@@ -20,4 +21,15 @@
     @apply inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/35 bg-white/10 px-7 py-3 text-sm font-medium tracking-wide text-white backdrop-blur transition hover:bg-white/20 sm:w-auto;
   }
   .card { @apply rounded-3xl border border-blush-100 bg-white/80 p-6 shadow-sm backdrop-blur sm:p-7; }
+
+  /* Mobile: keep Stream visible; sm+: match Stream 16:9-ish source ratio (~54.32%) */
+  .hero-stream {
+    min-height: min(88svh, 720px);
+  }
+  @media (min-width: 640px) {
+    .hero-stream {
+      min-height: 0;
+      padding-top: 54.32098765432099%;
+    }
+  }
 }
