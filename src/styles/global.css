@@ -7,7 +7,7 @@
 @layer base {
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body { @apply overflow-x-hidden bg-blush-50 text-blush-950 font-sans antialiased; }
-  img, video, iframe { max-width: 100%; }
+  img, video { max-width: 100%; }
   ::selection { @apply bg-champagne-200 text-blush-950; }
 }
 
@@ -22,14 +22,11 @@
   }
   .card { @apply rounded-3xl border border-blush-100 bg-white/80 p-6 shadow-sm backdrop-blur sm:p-7; }
 
-  /* Mobile: keep Stream visible; sm+: match Stream 16:9-ish source ratio (~54.32%) */
+  /*
+    Match Cloudflare Stream source aspect (~54.32%) on all breakpoints so the
+    player fills the frame without black letterboxing. Mobile copy sits below.
+  */
   .hero-stream {
-    min-height: min(88svh, 720px);
-  }
-  @media (min-width: 640px) {
-    .hero-stream {
-      min-height: 0;
-      padding-top: 54.32098765432099%;
-    }
+    padding-top: 54.32098765432099%;
   }
 }

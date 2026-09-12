@@ -13,35 +13,51 @@ const STREAM_SRC =
   <main class="flex-1">
     <section class="relative bg-blush-950">
       <!--
-        Mobile: tall viewport hero so the Stream frame stays visible above the copy.
-        Desktop/tablet: preserve the Stream aspect ratio.
+        Mobile: match Stream aspect (no letterboxing) and place copy BELOW the frame.
+        sm+: keep cinematic overlay on the Stream aspect box.
       -->
       <div class="hero-stream relative w-full overflow-hidden">
         <iframe
           src={STREAM_SRC}
           title="CenPho Wax hero video"
           loading="eager"
-          class="hero-stream__media absolute inset-0 h-full w-full border-0"
+          class="hero-stream__media absolute inset-0 h-full w-full max-w-none border-0"
           allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
           allowfullscreen="true"
         ></iframe>
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-blush-950/95 via-blush-950/35 to-transparent sm:from-blush-950 sm:via-blush-950/50 sm:to-blush-950/20"></div>
-        <div class="absolute inset-0 flex items-end">
-          <div class="container-narrow w-full pb-8 pt-24 sm:pb-12 sm:pt-20">
-            <p class="mb-2 text-[10px] font-medium uppercase tracking-widestx text-champagne-400 sm:mb-3 sm:text-xs">
+        <div class="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-blush-950 via-blush-950/50 to-blush-950/20 sm:block"></div>
+        <div class="absolute inset-0 hidden items-end sm:flex">
+          <div class="container-narrow w-full pb-12 pt-20">
+            <p class="mb-3 text-xs font-medium uppercase tracking-widestx text-champagne-400">
               Central Phoenix · Brazilian Wax
             </p>
-            <h1 class="font-display text-[2.5rem] font-semibold leading-[0.95] text-white sm:text-6xl lg:text-7xl">
+            <h1 class="font-display text-6xl font-semibold leading-[0.95] text-white lg:text-7xl">
               CenPho <span class="italic text-champagne-400">Wax</span>
             </h1>
-            <p class="mt-3 max-w-lg text-sm leading-relaxed text-blush-100/90 sm:mt-5 sm:text-lg">
+            <p class="mt-5 max-w-lg text-lg leading-relaxed text-blush-100/90">
               A refined studio concept for Brazilian waxing in the heart of Phoenix — hard wax, quieter rooms, lasting smoothness.
             </p>
-            <div class="mt-5 flex flex-col gap-2 sm:mt-8 sm:flex-row sm:gap-3">
+            <div class="mt-8 flex flex-row gap-3">
               <a href="#method" class="btn-primary pointer-events-auto">The Method</a>
               <a href="#acquisition" class="btn-secondary pointer-events-auto">Domain Available</a>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="bg-blush-950 px-4 pb-10 pt-6 sm:hidden">
+        <p class="mb-2 text-[10px] font-medium uppercase tracking-widestx text-champagne-400">
+          Central Phoenix · Brazilian Wax
+        </p>
+        <h1 class="font-display text-[2.5rem] font-semibold leading-[0.95] text-white">
+          CenPho <span class="italic text-champagne-400">Wax</span>
+        </h1>
+        <p class="mt-3 max-w-lg text-sm leading-relaxed text-blush-100/90">
+          A refined studio concept for Brazilian waxing in the heart of Phoenix — hard wax, quieter rooms, lasting smoothness.
+        </p>
+        <div class="mt-5 flex flex-col gap-2">
+          <a href="#method" class="btn-primary">The Method</a>
+          <a href="#acquisition" class="btn-secondary">Domain Available</a>
         </div>
       </div>
     </section>
