@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { services } from '../config/services';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'CenPho Wax service pricing',
+  itemListElement: services.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Offer',
+      name: service.name,
+      price: String(service.price),
+      priceCurrency: 'USD',
+      url: new URL(`/services/${service.slug}/`, 'https://cenphowax.com').href,
+    },
+  })),
+};
+---
+
+<Layout
+  title="Waxing Prices in Central Phoenix | CenPho Wax"
+  description="Straight per-session waxing prices: Brazilian $65, bikini $45, underarms $20, facials from $25, full legs $60, arms $35. Central Phoenix."
+  schemas={[schema]}
+>
+  <Header />
+  <Breadcrumbs items={[{ name: 'Pricing', path: '/pricing/' }]} />
+
+  <main class="flex-1">
+    <section class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Pricing</p>
+          <h1 class="mt-3 font-display text-4xl font-semibold text-blush-950 sm:text-5xl">Simple per-session pricing</h1>
+          <p class="mt-4 text-base leading-relaxed text-blush-800 sm:text-lg">
+            No packages to decode and no surprise add-ons. You pay for the service you book, confirmed when you
+            schedule your appointment.
+          </p>
+        </div>
+
+        <div class="mx-auto mt-12 max-w-3xl overflow-hidden rounded-3xl border border-blush-100">
+          <table class="w-full text-left text-sm">
+            <caption class="sr-only">CenPho Wax service prices</caption>
+            <thead class="bg-blush-50 text-[11px] uppercase tracking-widestx text-blush-600">
+              <tr>
+                <th scope="col" class="px-5 py-4 font-medium">Service</th>
+                <th scope="col" class="px-5 py-4 font-medium">Time</th>
+                <th scope="col" class="px-5 py-4 text-right font-medium">Price</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-blush-100 bg-white">
+              {
+                services.map((service) => (
+                  <tr>
+                    <td class="px-5 py-4">
+                      <a href={`/services/${service.slug}/`} class="font-medium text-blush-950 hover:text-champagne-500">
+                        {service.name}
+                      </a>
+                    </td>
+                    <td class="px-5 py-4 text-blush-600">{service.duration}</td>
+                    <td class="px-5 py-4 text-right font-display text-lg font-semibold text-blush-950">${service.price}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose prose-blush mx-auto mt-10 max-w-3xl">
+          <h2>How pricing works</h2>
+          <ul>
+            <li>Prices are per session — waxing is priced by the appointment, not by the hour.</li>
+            <li>Combining services in one visit (for example arms and underarms) is fine; mention it at booking so we block the right time.</li>
+            <li>Exact pricing and availability are confirmed when you <a href="/contact/">book your appointment</a>.</li>
+          </ul>
+          <h2>Comparing value</h2>
+          <p>
+            A Brazilian at $65 lasts 3 to 4 weeks. Shaving the same area costs a razor, cream, and irritation every few
+            days — over the same month, waxing is fewer interventions and a longer smooth window. Full breakdowns live
+            on each <a href="/services/">service page</a>.
+          </p>
+        </div>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+          <a href="/contact/" class="btn-primary">Book an appointment</a>
+          <a href="/faq/" class="inline-flex min-h-11 items-center justify-center rounded-full border border-blush-300 px-7 py-3 text-sm font-medium text-blush-900 hover:bg-blush-100">Read the FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

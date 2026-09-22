@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const groups = [
+  {
+    title: 'Before your appointment',
+    items: [
+      {
+        q: 'How long should my hair be before waxing?',
+        a: 'A quarter to a half inch — roughly two to three weeks of growth for most people. Shorter hair does not give the wax enough to grip; much longer hair can be trimmed at the start of your appointment.',
+      },
+      {
+        q: 'Should I exfoliate before a wax?',
+        a: 'Exfoliate the day before, not the day of. Exfoliating on appointment day can leave skin too sensitive, while skipping it entirely means dead skin can block a clean pull.',
+      },
+      {
+        q: 'What should I avoid 48 hours before waxing?',
+        a: 'Retinoids, AHAs/BHAs, exfoliating acids, and self-tanner. Also avoid sunburned or freshly tanned skin in the area to be waxed.',
+      },
+      {
+        q: 'Can I wax while on my period?',
+        a: 'Yes — the area is typically more sensitive in the days just before and during your period, so schedule accordingly if you are concerned about comfort.',
+      },
+    ],
+  },
+  {
+    title: 'During the session',
+    items: [
+      {
+        q: 'Does hard wax hurt less than soft wax?',
+        a: 'On sensitive areas, most people find hard wax more comfortable. It sets on the hair rather than the skin, so removal pulls at the follicle instead of tugging live tissue.',
+      },
+      {
+        q: 'How long does a Brazilian take?',
+        a: 'Forty-five to sixty minutes including consultation, preparation, the waxing itself, and aftercare guidance.',
+      },
+      {
+        q: 'Is the room private?',
+        a: 'Yes. Sessions are appointment-led in a private room — you are never on a shared salon floor.',
+      },
+    ],
+  },
+  {
+    title: 'After your session',
+    items: [
+      {
+        q: 'How long do results last?',
+        a: 'Typically 3 to 4 weeks. Regrowth timing varies by area, hormones, and season — and consistent sessions often lead to finer regrowth over time.',
+      },
+      {
+        q: 'How do I prevent ingrown hairs?',
+        a: 'Start gentle exfoliation around day three, keep the area moisturized, and avoid tight clothing in the first 48 hours. Our <a href="/aftercare/">aftercare guide</a> covers the full routine.',
+      },
+      {
+        q: 'When can I swim or work out again?',
+        a: 'Wait 24 hours before heavy workouts and 48 hours before pools, hot tubs, and open water. Freshly opened follicles need that window to settle.',
+      },
+      {
+        q: 'Can I wax if I have sensitive skin or keratosis pilaris?',
+        a: 'Hard wax is usually the better option for reactive skin, but tell us about conditions, medications, and recent treatments at booking so we can adjust technique or decline if waxing is not safe that day.',
+      },
+    ],
+  },
+  {
+    title: 'Booking & pricing',
+    items: [
+      {
+        q: 'How much do services cost?',
+        a: 'Brazilian $65, bikini $45, underarms $20, facials from $25, full legs $60, and arms $35. Full detail lives on the <a href="/pricing/">pricing page</a>.',
+      },
+      {
+        q: 'Where is the studio?',
+        a: 'Central Phoenix — serving Arcadia, Midtown, Encanto, Uptown, Biltmore, and downtown Phoenix. Sessions are by appointment; <a href="/contact/">contact us</a> to book.',
+      },
+    ],
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: groups.flatMap((group) =>
+    group.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    }))
+  ),
+};
+---
+
+<Layout
+  title="Waxing FAQ | Prep, Pain, Aftercare & Pricing | CenPho Wax"
+  description="Answers to common waxing questions: hair length, hard wax comfort, aftercare, ingrowns, pricing, and booking in Central Phoenix."
+  schemas={[faqSchema]}
+>
+  <Header />
+  <Breadcrumbs items={[{ name: 'FAQ', path: '/faq/' }]} />
+
+  <main class="flex-1">
+    <section class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">FAQ</p>
+          <h1 class="mt-3 font-display text-4xl font-semibold text-blush-950 sm:text-5xl">Waxing questions, answered</h1>
+          <p class="mt-4 text-base leading-relaxed text-blush-800 sm:text-lg">
+            Everything clients ask before a first visit — preparation, comfort, aftercare, and booking. Something
+            missing? <a href="/contact/" class="font-medium text-blush-950 underline decoration-champagne-500 underline-offset-4">Ask us directly</a>.
+          </p>
+        </div>
+
+        <div class="mt-12 space-y-12">
+          {
+            groups.map((group) => (
+              <div>
+                <h2 class="font-display text-2xl font-semibold text-blush-950 sm:text-3xl">{group.title}</h2>
+                <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+                  {group.items.map((item) => (
+                    <div class="card">
+                      <dt class="font-medium text-blush-950">{item.q}</dt>
+                      <dd class="mt-2 text-sm leading-relaxed text-blush-700" set:html={item.a} />
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-14 flex flex-wrap justify-center gap-4">
+          <a href="/services/" class="btn-primary">Browse services</a>
+          <a href="/contact/" class="inline-flex min-h-11 items-center justify-center rounded-full border border-blush-300 px-7 py-3 text-sm font-medium text-blush-900 hover:bg-blush-100">Book an appointment</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

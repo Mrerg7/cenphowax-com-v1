@@ -1,5 +1,17 @@
 ---
+import { services } from '../config/services';
+import { site } from '../config/site';
+
 const currentYear = new Date().getFullYear();
+
+const serviceLinks = services.slice(0, 4);
+const companyLinks = [
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/aftercare/', label: 'Aftercare' },
+  { href: '/faq/', label: 'FAQ' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
 ---
 
 <footer id="acquisition" class="bg-blush-950 text-blush-50">
@@ -28,21 +40,70 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 
-  <div class="container-narrow py-8">
-    <div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+  <div class="container-narrow py-10 sm:py-12">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
       <div>
         <p class="font-display text-lg text-white">CenPho Wax</p>
-        <p class="text-xs uppercase tracking-widestx text-blush-400">Informational platform</p>
+        <p class="mt-1 text-xs uppercase tracking-widestx text-champagne-400">Central Phoenix Wax Studio</p>
+        <p class="mt-4 text-xs leading-relaxed text-blush-400">
+          Hard-wax Brazilian and body waxing by appointment, serving {site.neighborhoods}.
+        </p>
+        <a href={`mailto:${site.email}`} class="mt-3 inline-block text-xs text-champagne-400 hover:text-champagne-200">{site.email}</a>
       </div>
-      <p class="max-w-md text-xs leading-relaxed text-blush-400 sm:text-right">
-        This website is for demonstration and informational purposes only. It does not constitute an offer of services,
-        a commitment to deploy, or a guarantee of outcomes. All statistics, projections, and references to specific
-        technologies are based on publicly available information as of the date shown and are subject to change.
-      </p>
+
+      <div>
+        <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-400">Services</p>
+        <ul class="mt-4 space-y-2 text-sm text-blush-200">
+          {
+            serviceLinks.map((service) => (
+              <li>
+                <a href={`/services/${service.slug}/`} class="transition hover:text-champagne-400">
+                  {service.name}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href="/services/" class="transition hover:text-champagne-400">All services →</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-400">Studio</p>
+        <ul class="mt-4 space-y-2 text-sm text-blush-200">
+          {
+            companyLinks.map((link) => (
+              <li>
+                <a href={link.href} class="transition hover:text-champagne-400">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-400">Guides</p>
+        <ul class="mt-4 space-y-2 text-sm text-blush-200">
+          <li><a href="/blog/brazilian-wax-central-phoenix/" class="transition hover:text-champagne-400">Brazilian wax in Central Phoenix</a></li>
+          <li><a href="/blog/hard-wax-vs-soft-wax/" class="transition hover:text-champagne-400">Hard wax vs soft wax</a></li>
+          <li><a href="/blog/first-brazilian-wax-what-to-expect/" class="transition hover:text-champagne-400">Your first Brazilian wax</a></li>
+          <li><a href="/blog/" class="transition hover:text-champagne-400">All guides →</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="mt-8 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-blush-500 sm:flex-row sm:justify-between">
-      <p>© {currentYear} CenPho Wax. All rights reserved.</p>
-      <p>Astro · Cloudflare Workers Static Assets · Stream</p>
+
+    <div class="mt-10 border-t border-white/10 pt-6">
+      <p class="max-w-3xl text-xs leading-relaxed text-blush-500">
+        Educational information only — not a substitute for professional skincare or medical advice. Individual results
+        vary. Services, availability, and pricing are confirmed at booking.
+      </p>
+      <div class="mt-4 flex flex-col gap-2 text-xs text-blush-500 sm:flex-row sm:items-center sm:justify-between">
+        <p>© {currentYear} CenPho Wax. All rights reserved.</p>
+        <p>Central Phoenix, AZ · By appointment</p>
+      </div>
     </div>
   </div>
 </footer>

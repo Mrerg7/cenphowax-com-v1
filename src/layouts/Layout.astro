@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { site } from '../config/site';
 
 interface Props {
   title?: string;
@@ -7,21 +8,90 @@ interface Props {
   ogImage?: string;
   canonical?: string | false;
   robots?: string;
+  schemas?: Record<string, unknown>[];
+  datePublished?: string;
+  dateModified?: string;
 }
 
 const POSTER =
   'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/thumbnails/thumbnail.jpg?time=&height=600';
 
+const defaultCanonical = new URL(Astro.url.pathname, 'https://cenphowax.com').href;
+
 const {
-  title = 'CenPho Wax | Central Phoenix Brazilian Wax',
-  description = 'An elegant Central Phoenix Brazilian wax studio concept. Hard wax for sensitive areas and smooth results for 3 to 4 weeks. Domain available.',
+  title = 'CenPho Wax | Central Phoenix Brazilian Wax Studio',
+  description =
+    'Hard-wax Brazilian and body waxing in Central Phoenix. A quiet, appointment-led studio serving Arcadia, Midtown, and downtown Phoenix.',
   ogImage = POSTER,
-  canonical = 'https://cenphowax.com/',
+  canonical = defaultCanonical,
   robots = 'index, follow, max-image-preview:large, max-snippet:-1',
+  schemas = [],
+  datePublished = '2026-09-12',
+  dateModified = '2026-09-22',
 } = Astro.props;
 
-const siteName = 'CenPho Wax';
-const pageUrl = canonical || 'https://cenphowax.com/';
+const siteName = site.name;
+const pageUrl = canonical || site.url;
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BeautySalon',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  url: site.url,
+  image: ogImage,
+  email: site.email,
+  priceRange: site.priceRange,
+  description:
+    'Appointment-led Brazilian and body waxing studio in Central Phoenix, specializing in hard wax for sensitive skin.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.address.addressLocality,
+    addressRegion: site.address.addressRegion,
+    addressCountry: site.address.addressCountry,
+  },
+  areaServed: site.areasServed.map((area) => ({
+    '@type': 'AdministrativeArea',
+    name: area,
+  })),
+  makesOffer: {
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: 'Brazilian Waxing',
+      serviceType: 'Brazilian waxing',
+    },
+  },
+};
+
+const baseSchemas: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteName,
+    url: site.url,
+    description,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: pageUrl,
+    isPartOf: { '@type': 'WebSite', name: siteName, url: site.url },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage },
+    datePublished,
+    dateModified,
+    about: {
+      '@type': 'Thing',
+      name: 'Central Phoenix Brazilian Wax',
+      description:
+        'Hard-wax Brazilian services designed for sensitive areas, with smooth results lasting 3 to 4 weeks.',
+    },
+  },
+  businessSchema,
+  ...schemas,
+];
 ---
 
 <!doctype html>
@@ -35,6 +105,13 @@ const pageUrl = canonical || 'https://cenphowax.com/';
     <meta name="robots" content={robots} />
     {canonical !== false && <link rel="canonical" href={canonical} />}
     <meta name="google-site-verification" content="QqL1gcUdT04fDOsbT9z-u0yhkYp8MJzDanJ2gDxfx3M" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={pageUrl} />
@@ -52,50 +129,11 @@ const pageUrl = canonical || 'https://cenphowax.com/';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#301d17" />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": siteName,
-      "url": "https://cenphowax.com",
-      "description": description
-    })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": title,
-      "description": description,
-      "url": pageUrl,
-      "primaryImageOfPage": { "@type": "ImageObject", "url": ogImage },
-      "about": {
-        "@type": "Thing",
-        "name": "Central Phoenix Brazilian Wax",
-        "description": "Hard-wax Brazilian services designed for sensitive areas, with smooth results lasting 3 to 4 weeks."
-      },
-      "datePublished": "2026-09-12",
-      "dateModified": "2026-09-12"
-    })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "How long does Brazilian waxing last?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Wax epilation extracts hair from the root and typically provides smooth skin for 3 to 4 weeks. With consistent sessions, regrowth often becomes finer."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why use hard wax for a Brazilian?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Hard wax is ideal for the bikini line and other sensitive areas because it adheres to hair rather than skin, reducing pull and irritation."
-          }
-        }
-      ]
-    })} />
+    {
+      baseSchemas.map((schema) => (
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
+    }
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />

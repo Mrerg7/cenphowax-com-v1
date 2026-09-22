@@ -2,12 +2,45 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { services } from '../config/services';
 
 const STREAM_SRC =
   'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/iframe?muted=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-wa9cpywo3l4jte5c.cloudflarestream.com%2F4b63e1d5f2332b277027a8c7baef39a3%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&controls=false';
+
+const homeFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How long does Brazilian waxing last?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Wax epilation extracts hair from the root and typically provides smooth skin for 3 to 4 weeks. With consistent sessions, regrowth often becomes finer.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Why use hard wax for a Brazilian?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Hard wax is ideal for the bikini line and other sensitive areas because it adheres to hair rather than skin, reducing pull and irritation.',
+      },
+    },
+  ],
+};
+
+const exploreLinks = [
+  { href: '/services/', title: 'Services', body: 'Brazilian, bikini, underarms, face, legs, and arms — hard wax only.' },
+  { href: '/pricing/', title: 'Pricing', body: 'Straight per-session prices, from $20 underarms to $65 Brazilian.' },
+  { href: '/aftercare/', title: 'Aftercare', body: 'The first 48 hours and the week that follows — desert edition.' },
+  { href: '/faq/', title: 'FAQ', body: 'Prep, pain, sensitivity, and scheduling — answered before you book.' },
+  { href: '/blog/', title: 'Guides', body: 'Long-tail reading on technique, timing, and Phoenix summers.' },
+  { href: '/about/', title: 'About', body: 'Who we are, how we work, and the neighborhoods we serve.' },
+];
 ---
 
-<Layout>
+<Layout schemas={[homeFaqSchema]}>
   <Header />
 
   <main class="flex-1">
@@ -132,6 +165,43 @@ const STREAM_SRC =
       </div>
     </section>
 
+    <section id="explore" class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Explore</p>
+          <h2 class="mt-3 font-display text-3xl font-semibold text-blush-950 sm:text-5xl">Everything worth reading before you book</h2>
+          <p class="mt-4 text-base leading-relaxed text-blush-800 sm:text-lg">
+            Services, pricing, preparation, and guides — all written for waxing in Central Phoenix.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            exploreLinks.map((link) => (
+              <a href={link.href} class="card group transition hover:border-champagne-400/60 hover:shadow-md">
+                <h3 class="font-display text-2xl font-semibold text-blush-950 transition group-hover:text-champagne-500">{link.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-blush-700">{link.body}</p>
+                <span class="mt-4 block text-sm font-medium text-blush-800 transition group-hover:text-champagne-500">Explore →</span>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-3">
+          {
+            services.slice(0, 4).map((service) => (
+              <a
+                href={`/services/${service.slug}/`}
+                class="rounded-full border border-blush-200 bg-blush-50 px-4 py-2 text-xs font-medium text-blush-800 transition hover:border-champagne-400/60 hover:text-blush-950"
+              >
+                {service.name} · ${service.price}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
     <section id="brand" class="section-padding bg-blush-50">
       <div class="container-narrow max-w-3xl text-center">
         <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">The Domain</p>
@@ -150,7 +220,8 @@ const STREAM_SRC =
     <section class="border-t border-blush-100 bg-white py-10 sm:py-12">
       <div class="container-narrow text-center">
         <p class="mx-auto max-w-2xl text-xs leading-relaxed text-blush-600 sm:text-sm">
-          Information presented is for demonstration and educational purposes only and does not constitute an offer of salon services.
+          Educational information only — not a substitute for professional skincare or medical advice. Individual
+          results vary. Services, availability, and pricing are confirmed at booking.
         </p>
       </div>
     </section>

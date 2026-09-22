@@ -1,0 +1,47 @@
+---
+interface Crumb {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+const crumbs: Crumb[] = [{ name: 'Home', path: '/' }, ...items];
+
+const data = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((crumb, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: crumb.name,
+    item: new URL(crumb.path, 'https://cenphowax.com').href,
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class="border-b border-blush-100 bg-blush-50">
+  <ol class="container-narrow flex flex-wrap items-center gap-2 py-3 text-xs text-blush-600">
+    {
+      crumbs.map((crumb, index) => (
+        <li class="flex items-center gap-2">
+          {index > 0 && <span aria-hidden="true" class="text-blush-300">/</span>}
+          {index < crumbs.length - 1 ? (
+            <a href={crumb.path} class="transition hover:text-blush-900">
+              {crumb.name}
+            </a>
+          ) : (
+            <span aria-current="page" class="font-medium text-blush-900">
+              {crumb.name}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

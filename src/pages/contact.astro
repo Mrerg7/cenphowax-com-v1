@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { services } from '../config/services';
+import { site } from '../config/site';
+
+const areas = site.areasServed.filter((area) => area !== 'Central Phoenix');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact CenPho Wax',
+  url: new URL('/contact/', site.url).href,
+  about: { '@id': `${site.url}/#business` },
+};
+---
+
+<Layout
+  title="Contact & Book | CenPho Wax — Central Phoenix, AZ"
+  description="Book a waxing appointment at CenPho Wax in Central Phoenix. Email to schedule — serving Arcadia, Midtown, Encanto, Uptown, Biltmore, and downtown Phoenix."
+  schemas={[schema]}
+>
+  <Header />
+  <Breadcrumbs items={[{ name: 'Contact', path: '/contact/' }]} />
+
+  <main class="flex-1">
+    <section class="section-padding bg-white">
+      <div class="container-narrow grid gap-12 lg:grid-cols-2">
+        <div>
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Contact</p>
+          <h1 class="mt-3 font-display text-4xl font-semibold text-blush-950 sm:text-5xl">Book your appointment</h1>
+          <p class="mt-4 text-base leading-relaxed text-blush-800 sm:text-lg">
+            Sessions are by appointment only. Send an email with the service you want, your preferred days, and any
+            skin considerations — we will confirm availability and exact pricing.
+          </p>
+
+          <a
+            href={`mailto:${site.email}?subject=Appointment%20Request%3A%20CenPho%20Wax`}
+            class="btn-primary mt-8 flex justify-center"
+          >
+            Email {site.email}
+          </a>
+
+          <div class="prose prose-blush mt-10 max-w-none">
+            <h2>What to include</h2>
+            <ul>
+              <li>Which service — see the <a href="/services/">service menu</a> and <a href="/pricing/">pricing</a></li>
+              <li>Preferred days or times</li>
+              <li>Skin sensitivities, medications, or recent treatments we should know about</li>
+              <li>Whether this is your first waxing session</li>
+            </ul>
+            <h2>New here?</h2>
+            <p>
+              Read <a href="/blog/first-brazilian-wax-what-to-expect/">what to expect at your first Brazilian wax</a> or
+              skim the <a href="/faq/">FAQ</a> before you write — they cover prep, comfort, and aftercare.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="rounded-3xl border border-blush-100 bg-blush-50 p-6 sm:p-8">
+            <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Studio</p>
+            <dl class="mt-5 space-y-5 text-sm">
+              <div class="border-b border-blush-100 pb-4">
+                <dt class="text-blush-600">Service area</dt>
+                <dd class="mt-1 font-medium text-blush-950">Central Phoenix, Arizona</dd>
+              </div>
+              <div class="border-b border-blush-100 pb-4">
+                <dt class="text-blush-600">Neighborhoods</dt>
+                <dd class="mt-1 font-medium text-blush-950">{areas.join(', ')}</dd>
+              </div>
+              <div class="border-b border-blush-100 pb-4">
+                <dt class="text-blush-600">Format</dt>
+                <dd class="mt-1 font-medium text-blush-950">Private, by appointment</dd>
+              </div>
+              <div class="border-b border-blush-100 pb-4">
+                <dt class="text-blush-600">Email</dt>
+                <dd class="mt-1">
+                  <a href={`mailto:${site.email}`} class="font-medium text-blush-950 underline decoration-champagne-500 underline-offset-4">{site.email}</a>
+                </dd>
+              </div>
+              <div>
+                <dt class="text-blush-600">Wax</dt>
+                <dd class="mt-1 font-medium text-blush-950">Hard wax only</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="mt-6 rounded-3xl border border-blush-100 bg-white p-6 sm:p-8">
+            <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Popular services</p>
+            <ul class="mt-4 space-y-3 text-sm">
+              {
+                services.slice(0, 4).map((service) => (
+                  <li class="flex items-baseline justify-between gap-4">
+                    <a href={`/services/${service.slug}/`} class="font-medium text-blush-950 hover:text-champagne-500">
+                      {service.name}
+                    </a>
+                    <span class="font-display text-lg font-semibold text-champagne-500">${service.price}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

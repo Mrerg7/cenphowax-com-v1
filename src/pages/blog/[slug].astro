@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection, render } from 'astro:content';
+import { site } from '../../config/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const canonical = new URL(`/blog/${post.id}/`, site.url).href;
+const published = post.data.pubDate.toISOString().slice(0, 10);
+const modified = (post.data.updatedDate ?? post.data.pubDate).toISOString().slice(0, 10);
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const related = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
+
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: published,
+  dateModified: modified,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  author: { '@type': 'Organization', name: site.name, url: site.url },
+  publisher: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+    logo: { '@type': 'ImageObject', url: `${site.url}/favicon.svg` },
+  },
+  about: { '@id': `${site.url}/#business` },
+};
+---
+
+<Layout
+  title={`${post.data.title} | CenPho Wax`}
+  description={post.data.description}
+  canonical={canonical}
+  schemas={[schema]}
+  datePublished={published}
+  dateModified={modified}
+>
+  <Header />
+  <Breadcrumbs
+    items={[
+      { name: 'Guides', path: '/blog/' },
+      { name: post.data.title, path: `/blog/${post.id}/` },
+    ]}
+  />
+
+  <main class="flex-1">
+    <article class="section-padding bg-white">
+      <div class="container-narrow max-w-3xl">
+        <p class="text-[11px] uppercase tracking-widestx text-blush-500">
+          <time datetime={published}>{dateFormat.format(post.data.pubDate)}</time>
+          {post.data.updatedDate && (
+            <>
+              {' · Updated '}
+              <time datetime={modified}>{dateFormat.format(post.data.updatedDate)}</time>
+            </>
+          )}
+          {' · '}by {site.name}
+        </p>
+        <h1 class="mt-4 font-display text-4xl font-semibold leading-tight text-blush-950 sm:text-5xl">
+          {post.data.title}
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-blush-700">{post.data.description}</p>
+
+        {
+          post.data.tags.length > 0 && (
+            <p class="mt-6 flex flex-wrap gap-2">
+              {post.data.tags.map((tag) => (
+                <span class="rounded-full bg-blush-100 px-3 py-1 text-[10px] uppercase tracking-widestx text-blush-600">
+                  {tag.replace(/-/g, ' ')}
+                </span>
+              ))}
+            </p>
+          )
+        }
+
+        <hr class="my-10 border-blush-100" />
+
+        <div class="prose prose-blush max-w-none">
+          <Content />
+        </div>
+
+        <div class="mt-12 rounded-3xl border border-blush-100 bg-blush-50 p-6 sm:p-8">
+          <h2 class="font-display text-2xl font-semibold text-blush-950">Ready to book?</h2>
+          <p class="mt-2 text-sm leading-relaxed text-blush-700">
+            Hard-wax Brazilian and body waxing by appointment in Central Phoenix. See the
+            <a href="/services/">service menu</a> and <a href="/pricing/">pricing</a>, then
+            <a href="/contact/">email us to schedule</a>.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <section class="section-padding border-t border-blush-100 bg-blush-50">
+      <div class="container-narrow">
+        <h2 class="font-display text-2xl font-semibold text-blush-950">More guides</h2>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          {
+            related.map((item) => (
+              <a href={`/blog/${item.id}/`} class="card transition hover:border-champagne-400/60">
+                <h3 class="font-display text-xl font-semibold text-blush-950">{item.data.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-blush-700">{item.data.description}</p>
+              </a>
+            ))
+          }
+        </div>
+        <p class="mt-8">
+          <a href="/blog/" class="text-sm font-medium text-blush-900 underline decoration-champagne-500 underline-offset-4">← All guides</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

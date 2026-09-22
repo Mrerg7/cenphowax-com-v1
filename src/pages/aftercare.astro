@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const firstDay = [
+  'Leave the area alone for the first 24 hours — no scrubbing, no tight waistbands, no heavy workouts.',
+  'Skip pools, hot tubs, and open water for 48 hours to keep freshly opened follicles calm.',
+  'Avoid deodorants, fragranced lotions, and active skincare on the waxed area for the rest of the day.',
+  'Loose clothing and a cool shower beat a hot bath in the first day.',
+];
+
+const firstWeek = [
+  'Exfoliate gently 2–3 times a week starting on day three, using a washcloth or mild scrub.',
+  'Moisturize daily — desert air dries skin, and dry skin traps regrowing hairs.',
+  'If a hair starts to curl under, loosen it with exfoliation rather than picking at it.',
+  'Book your next session at 3–4 weeks, before hairs lengthen past the easy-pull window.',
+];
+
+const desertRules = [
+  'Sun: no direct sun or tanning on the waxed area for 48 hours, then SPF 30+ — freshly waxed skin burns faster.',
+  'Swimming: rinse with fresh water after pools and treat chlorine as a drying agent for the first week.',
+  'Heat: Phoenix summers mean sweat and friction — looser clothing in the first 48 hours reduces irritation.',
+  'Ingrown prevention: keep the area exfoliated and moisturized; most ingrowns start with dry, flaky skin.',
+];
+---
+
+<Layout
+  title="Waxing Aftercare Guide | First 48 Hours & Ingrown Prevention | CenPho Wax"
+  description="What to do after waxing: the first 24–48 hours, weekly exfoliation, and how to prevent ingrowns in Phoenix heat. The CenPho Wax aftercare routine."
+  schemas={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: 'How to care for skin after waxing',
+      description:
+        'A step-by-step aftercare routine for the first 48 hours and first week after a waxing session, including desert-climate adjustments.',
+      step: [
+        ...firstDay.map((text, index) => ({
+          '@type': 'HowToStep',
+          position: index + 1,
+          name: `First 24–48 hours: step ${index + 1}`,
+          text,
+        })),
+        ...firstWeek.map((text, index) => ({
+          '@type': 'HowToStep',
+          position: index + 5,
+          name: `First week: step ${index + 5}`,
+          text,
+        })),
+      ],
+    },
+  ]}
+>
+  <Header />
+  <Breadcrumbs items={[{ name: 'Aftercare', path: '/aftercare/' }]} />
+
+  <main class="flex-1">
+    <section class="section-padding bg-white">
+      <div class="container-narrow grid gap-12 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Aftercare</p>
+          <h1 class="mt-3 font-display text-4xl font-semibold text-blush-950 sm:text-5xl">
+            The first 48 hours decide the next four weeks
+          </h1>
+          <p class="mt-4 text-base leading-relaxed text-blush-800 sm:text-lg">
+            Waxing lifts hair from the root and leaves the follicle open and the skin briefly reactive. What you do
+            afterward determines whether you get smooth, comfortable weeks — or irritation and ingrowns.
+          </p>
+
+          <div class="prose prose-blush mt-10 max-w-none">
+            <h2>The first 24–48 hours</h2>
+            <ul>
+              {firstDay.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <h2>The rest of the first week</h2>
+            <ul>
+              {firstWeek.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <h2>Desert-climate rules (Phoenix edition)</h2>
+            <p>
+              Central Phoenix adds sun, chlorine, and heat to the usual aftercare equation. Treat these as part of the
+              routine, not optional extras:
+            </p>
+            <ul>
+              {desertRules.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <h2>When to contact us</h2>
+            <p>
+              Mild redness that settles within a few hours is normal. If you notice swelling, persistent irritation, or
+              signs of infection, reach out and pause at-home treatment until the skin recovers. For persistent
+              ingrowns, we can adjust technique and spacing at your next visit — mention it when you{' '}
+              <a href="/contact/">book</a>.
+            </p>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-1">
+          <div class="sticky top-24 rounded-3xl border border-blush-100 bg-blush-50 p-6">
+            <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Quick reference</p>
+            <dl class="mt-4 space-y-4 text-sm">
+              <div class="border-b border-blush-100 pb-3">
+                <dt class="font-medium text-blush-950">No heat, pools, or workouts</dt>
+                <dd class="mt-1 text-blush-600">First 24–48 hours</dd>
+              </div>
+              <div class="border-b border-blush-100 pb-3">
+                <dt class="font-medium text-blush-950">Start gentle exfoliation</dt>
+                <dd class="mt-1 text-blush-600">Day 3, 2–3× per week</dd>
+              </div>
+              <div class="border-b border-blush-100 pb-3">
+                <dt class="font-medium text-blush-950">SPF 30+ on exposed areas</dt>
+                <dd class="mt-1 text-blush-600">After 48 hours</dd>
+              </div>
+              <div>
+                <dt class="font-medium text-blush-950">Rebook</dt>
+                <dd class="mt-1 text-blush-600">3–4 weeks</dd>
+              </div>
+            </dl>
+            <a href="/contact/" class="btn-primary mt-6 flex justify-center">Book next session</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section-padding border-t border-blush-100 bg-blush-50">
+      <div class="container-narrow">
+        <h2 class="font-display text-2xl font-semibold text-blush-950">Keep reading</h2>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          <a href="/blog/how-long-does-waxing-last/" class="card transition hover:border-champagne-400/60">
+            <h3 class="font-display text-xl font-semibold text-blush-950">How long does waxing last?</h3>
+            <p class="mt-2 text-sm text-blush-700">Why 3–4 weeks, and what speeds up regrowth.</p>
+          </a>
+          <a href="/blog/waxing-in-phoenix-summer/" class="card transition hover:border-champagne-400/60">
+            <h3 class="font-display text-xl font-semibold text-blush-950">Waxing in Phoenix summers</h3>
+            <p class="mt-2 text-sm text-blush-700">Heat, pools, and sun exposure after a session.</p>
+          </a>
+          <a href="/faq/" class="card transition hover:border-champagne-400/60">
+            <h3 class="font-display text-xl font-semibold text-blush-950">Waxing FAQ</h3>
+            <p class="mt-2 text-sm text-blush-700">Prep, pain, sensitivity, and scheduling questions.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
