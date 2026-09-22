@@ -130,6 +130,28 @@ const baseSchemas: Record<string, unknown>[] = [
     <meta name="theme-color" content="#301d17" />
 
     {
+      site.ga4Id && (
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4Id}`}
+        />
+      )
+    }
+    {
+      site.ga4Id && (
+        <script is:inline define:vars={{ ga4Id: site.ga4Id }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            window.dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', ga4Id);
+        </script>
+      )
+    }
+
+    {
       baseSchemas.map((schema) => (
         <script type="application/ld+json" set:html={JSON.stringify(schema)} />
       ))

@@ -3,6 +3,7 @@ export const site = {
   tagline: 'Central Phoenix Brazilian Wax',
   url: 'https://cenphowax.com',
   email: 'sales@desertrich.com',
+  ga4Id: '',
   priceRange: '$$',
   address: {
     addressLocality: 'Phoenix',
