@@ -5,7 +5,8 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
-  canonical?: string;
+  canonical?: string | false;
+  robots?: string;
 }
 
 const POSTER =
@@ -16,9 +17,11 @@ const {
   description = 'An elegant Central Phoenix Brazilian wax studio concept. Hard wax for sensitive areas and smooth results for 3 to 4 weeks. Domain available.',
   ogImage = POSTER,
   canonical = 'https://cenphowax.com/',
+  robots = 'index, follow, max-image-preview:large, max-snippet:-1',
 } = Astro.props;
 
 const siteName = 'CenPho Wax';
+const pageUrl = canonical || 'https://cenphowax.com/';
 ---
 
 <!doctype html>
@@ -29,12 +32,12 @@ const siteName = 'CenPho Wax';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
+    {canonical !== false && <link rel="canonical" href={canonical} />}
     <meta name="google-site-verification" content="QqL1gcUdT04fDOsbT9z-u0yhkYp8MJzDanJ2gDxfx3M" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
@@ -61,7 +64,7 @@ const siteName = 'CenPho Wax';
       "@type": "WebPage",
       "name": title,
       "description": description,
-      "url": canonical,
+      "url": pageUrl,
       "primaryImageOfPage": { "@type": "ImageObject", "url": ogImage },
       "about": {
         "@type": "Thing",
