@@ -8,7 +8,6 @@ import { acquisitionMailto } from '../config/site';
 const STREAM_SRC =
   'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/iframe?muted=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-wa9cpywo3l4jte5c.cloudflarestream.com%2F4b63e1d5f2332b277027a8c7baef39a3%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&controls=false';
 
-const POSTER = '/img/hero-poster.jpg';
 
 const homeFaqSchema = {
   '@context': 'https://schema.org',
@@ -44,7 +43,7 @@ const exploreLinks = [
 ];
 ---
 
-<Layout schemas={[homeFaqSchema]} preloadImage={POSTER}>
+<Layout schemas={[homeFaqSchema]} preloadImage="/img/hero-poster.webp">
   <Header />
 
   <main id="main-content" class="flex-1">
@@ -55,7 +54,7 @@ const exploreLinks = [
       -->
       <div class="hero-stream relative w-full overflow-hidden">
         <img
-          src={POSTER}
+          src="/img/hero-poster.webp"
           alt=""
           aria-hidden="true"
           width="900"
