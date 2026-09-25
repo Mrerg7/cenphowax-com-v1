@@ -50,6 +50,17 @@ function isImmutableAsset(pathname) {
   );
 }
 
+function preloadLinkHeader(pathname) {
+  const hints = [
+    '</fonts/inter-400-latin.woff2>; rel=preload; as=font; type=font/woff2; crossorigin',
+    '</fonts/cormorant-garamond-500-latin.woff2>; rel=preload; as=font; type=font/woff2; crossorigin',
+  ];
+  if (pathname === '/' || pathname === '/index.html') {
+    hints.unshift('</img/hero-poster.webp>; rel=preload; as=image; fetchpriority=high');
+  }
+  return hints.join(', ');
+}
+
 function redirect(location) {
   return new Response(null, {
     status: 301,
@@ -91,6 +102,10 @@ export default {
     }
     if (response.ok && isImmutableAsset(url.pathname)) {
       headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+    const contentType = headers.get('content-type') || '';
+    if (response.ok && contentType.includes('text/html')) {
+      headers.set('Link', preloadLinkHeader(url.pathname));
     }
     return new Response(response.body, {
       status: response.status,

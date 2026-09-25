@@ -67,7 +67,8 @@ Offer/price details live in `src/config/site.ts` (`domain`, `priceLabel`, `acqui
 - **Worker (`src/worker.js`):** www/http → apex 301, legacy WordPress paths → `/`, `/sitemap.xml` + `/wp-sitemap.xml` → sitemap index, `/404` → `/`, HSTS/X-Frame-Options/Permissions-Policy/Referrer-Policy on every response
 - **Title/description:** all pages ≤ 60 chars, keyword-led; homepage targets "Central Phoenix Brazilian Wax" + "Domain for Sale"
 - **Fonts:** self-hosted Inter + Cormorant Garamond in `public/fonts/`, subset to the glyphs the site uses (86 KB → 70 KB) with `@font-face` + `font-display: swap` + `<link rel="preload">` — no third-party font request
-- **Critical path:** stylesheets inlined (`build.inlineStylesheets: 'always'`, removes a render-blocking request), hero poster served as preloaded WebP (81 KB JPEG → 43 KB) from origin, Stream video player mounted only after `window.load`, `/​_astro/`, `/fonts/`, `/img/` cached `immutable` for a year
+- **Critical path:** stylesheets inlined (`build.inlineStylesheets: 'always'`, removes a render-blocking request), hero poster served as preloaded WebP (81 KB JPEG → 43 KB) from origin, Stream video player mounted only after `window.load`, `/​_astro/`, `/fonts/`, `/img/`   cached `immutable` for a year
+- **Early Hints:** every HTML response carries `Link: rel=preload` headers for the fonts (and the poster on `/`), so Cloudflare can emit `103 Early Hints` before the document if the zone has Speed → Settings → Early Hints enabled
 - **Accessibility:** skip link, one visible `h1` per page, WCAG AA contrast on every text color, 44px primary tap targets
 
 ## Local development
