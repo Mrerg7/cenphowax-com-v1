@@ -15,8 +15,7 @@ interface Props {
   dateModified?: string;
 }
 
-const POSTER =
-  'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/thumbnails/thumbnail.jpg?time=&height=600';
+const POSTER = '/img/hero-poster.jpg';
 
 const defaultCanonical = new URL(Astro.url.pathname, 'https://cenphowax.com').href;
 
@@ -35,6 +34,7 @@ const {
 
 const siteName = site.name;
 const pageUrl = canonical || site.url;
+const ogImageUrl = /^https?:\/\//.test(ogImage) ? ogImage : new URL(ogImage, site.url).href;
 
 const businessSchema = {
   '@context': 'https://schema.org',
@@ -42,7 +42,7 @@ const businessSchema = {
   '@id': `${site.url}/#business`,
   name: site.name,
   url: site.url,
-  image: ogImage,
+  image: ogImageUrl,
   email: site.email,
   priceRange: site.priceRange,
   description:
@@ -116,7 +116,7 @@ const baseSchemas: Record<string, unknown>[] = [
     description,
     url: pageUrl,
     isPartOf: { '@type': 'WebSite', name: siteName, url: site.url },
-    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImageUrl },
     datePublished,
     dateModified,
     about: {
@@ -170,14 +170,14 @@ const baseSchemas: Record<string, unknown>[] = [
     <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#301d17" />

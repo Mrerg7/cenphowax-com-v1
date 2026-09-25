@@ -8,8 +8,7 @@ import { acquisitionMailto } from '../config/site';
 const STREAM_SRC =
   'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/iframe?muted=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-wa9cpywo3l4jte5c.cloudflarestream.com%2F4b63e1d5f2332b277027a8c7baef39a3%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&controls=false';
 
-const POSTER =
-  'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/thumbnails/thumbnail.jpg?time=&height=600';
+const POSTER = '/img/hero-poster.jpg';
 
 const homeFaqSchema = {
   '@context': 'https://schema.org',
@@ -59,8 +58,8 @@ const exploreLinks = [
           src={POSTER}
           alt=""
           aria-hidden="true"
-          width="1280"
-          height="695"
+          width="900"
+          height="490"
           loading="eager"
           fetchpriority="high"
           class="hero-stream__media absolute inset-0 h-full w-full object-cover"
