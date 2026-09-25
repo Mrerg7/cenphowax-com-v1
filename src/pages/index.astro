@@ -8,6 +8,9 @@ import { acquisitionMailto } from '../config/site';
 const STREAM_SRC =
   'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/iframe?muted=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-wa9cpywo3l4jte5c.cloudflarestream.com%2F4b63e1d5f2332b277027a8c7baef39a3%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&controls=false';
 
+const POSTER =
+  'https://customer-wa9cpywo3l4jte5c.cloudflarestream.com/4b63e1d5f2332b277027a8c7baef39a3/thumbnails/thumbnail.jpg?time=&height=600';
+
 const homeFaqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -42,7 +45,7 @@ const exploreLinks = [
 ];
 ---
 
-<Layout schemas={[homeFaqSchema]}>
+<Layout schemas={[homeFaqSchema]} preloadImage={POSTER}>
   <Header />
 
   <main id="main-content" class="flex-1">
@@ -52,8 +55,18 @@ const exploreLinks = [
         sm+: keep cinematic overlay on the Stream aspect box.
       -->
       <div class="hero-stream relative w-full overflow-hidden">
+        <img
+          src={POSTER}
+          alt=""
+          aria-hidden="true"
+          width="1280"
+          height="695"
+          loading="eager"
+          fetchpriority="high"
+          class="hero-stream__media absolute inset-0 h-full w-full object-cover"
+        />
         <iframe
-          src={STREAM_SRC}
+          data-src={STREAM_SRC}
           title="CenPho Wax hero video"
           loading="eager"
           class="hero-stream__media absolute inset-0 h-full w-full max-w-none border-0"
@@ -276,4 +289,16 @@ const exploreLinks = [
   </main>
 
   <Footer />
-</Layout>
+  </Layout>
+
+  <script>
+    const mountStream = () => {
+      document.querySelectorAll<HTMLIFrameElement>('iframe[data-src]').forEach((frame) => {
+        frame.src = frame.dataset.src || '';
+        frame.removeAttribute('data-src');
+      });
+    };
+    if (document.readyState === 'complete') mountStream();
+    else window.addEventListener('load', mountStream, { once: true });
+  </script>
+

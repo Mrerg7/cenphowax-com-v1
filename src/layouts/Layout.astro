@@ -7,6 +7,7 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  preloadImage?: string;
   canonical?: string | false;
   robots?: string;
   schemas?: Record<string, unknown>[];
@@ -24,6 +25,7 @@ const {
   description =
     'Hard-wax Brazilian and body waxing in Central Phoenix, serving Arcadia, Midtown, and downtown Phoenix. cenphowax.com is available for acquisition — asking $50,000.',
   ogImage = POSTER,
+  preloadImage,
   canonical = defaultCanonical,
   robots = 'index, follow, max-image-preview:large, max-snippet:-1',
   schemas = [],
@@ -157,6 +159,10 @@ const baseSchemas: Record<string, unknown>[] = [
       href="/fonts/cormorant-garamond-500-latin.woff2"
       crossorigin
     />
+
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
+    )}
 
     <link rel="alternate" type="application/rss+xml" title={`${siteName} guides`} href="/rss.xml" />
 
