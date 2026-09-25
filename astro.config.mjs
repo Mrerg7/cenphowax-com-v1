@@ -8,12 +8,15 @@ export default defineConfig({
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      filter: (page) => !page.includes('/404') && !page.includes('/rss.xml'),
       changefreq: 'monthly',
       priority: 0.8,
       serialize(item) {
         if (item.url === 'https://cenphowax.com/') {
           item.priority = 1.0;
+          item.changefreq = 'weekly';
+        } else if (item.url.includes('/domain-for-sale')) {
+          item.priority = 0.9;
           item.changefreq = 'weekly';
         } else if (item.url.includes('/services/') || item.url.includes('/pricing')) {
           item.priority = 0.9;

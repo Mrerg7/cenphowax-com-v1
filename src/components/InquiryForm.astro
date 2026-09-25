@@ -1,0 +1,157 @@
+---
+const budgetOptions = [
+  '$50,000 — list price',
+  '$35,000 – $49,999',
+  'Under $35,000',
+  'Installments / lease-to-own',
+  "Flexible — let's discuss",
+];
+
+const useCaseOptions = [
+  'Waxing or beauty studio',
+  'Multi-location salon brand',
+  'Mobile / at-home waxing service',
+  'Beauty marketplace or booking platform',
+  'Investor / domain portfolio',
+  'Other',
+];
+---
+
+<form id="inquiry-form" class="space-y-4" novalidate>
+  <input type="text" name="company" id="inq-company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="inq-name" class="mb-1.5 block text-xs font-medium uppercase tracking-widestx text-blush-600">Name</label>
+      <input
+        id="inq-name"
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        placeholder="Your name"
+        class="min-h-12 w-full rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm text-blush-950 placeholder:text-blush-400 focus:border-champagne-500 focus:outline-none"
+      />
+    </div>
+    <div>
+      <label for="inq-email" class="mb-1.5 block text-xs font-medium uppercase tracking-widestx text-blush-600">Email</label>
+      <input
+        id="inq-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder="you@company.com"
+        class="min-h-12 w-full rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm text-blush-950 placeholder:text-blush-400 focus:border-champagne-500 focus:outline-none"
+      />
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label for="inq-use" class="mb-1.5 block text-xs font-medium uppercase tracking-widestx text-blush-600">Intended use</label>
+      <select
+        id="inq-use"
+        name="useCase"
+        class="min-h-12 w-full rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm text-blush-950 focus:border-champagne-500 focus:outline-none"
+      >
+        {
+          useCaseOptions.map((option) => (
+            <option value={option}>{option}</option>
+          ))
+        }
+      </select>
+    </div>
+    <div>
+      <label for="inq-budget" class="mb-1.5 block text-xs font-medium uppercase tracking-widestx text-blush-600">Offer / structure</label>
+      <select
+        id="inq-budget"
+        name="budget"
+        class="min-h-12 w-full rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm text-blush-950 focus:border-champagne-500 focus:outline-none"
+      >
+        {
+          budgetOptions.map((option) => (
+            <option value={option}>{option}</option>
+          ))
+        }
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label for="inq-message" class="mb-1.5 block text-xs font-medium uppercase tracking-widestx text-blush-600">
+      Message <span class="normal-case tracking-normal text-blush-600">(optional)</span>
+    </label>
+    <textarea
+      id="inq-message"
+      name="message"
+      rows="3"
+      placeholder="Timeline, structure preference, questions…"
+      class="w-full resize-y rounded-xl border border-blush-200 bg-white px-4 py-3 text-sm text-blush-950 placeholder:text-blush-400 focus:border-champagne-500 focus:outline-none"
+    ></textarea>
+  </div>
+
+  <p id="inq-error" class="hidden text-sm text-red-600" role="alert"></p>
+
+  <button
+    type="submit"
+    class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-blush-800 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-blush-700"
+  >
+    <span>Send confidential inquiry</span>
+    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+    </svg>
+  </button>
+
+  <p class="text-center text-xs leading-relaxed text-blush-600">
+    Opens your email client pre-filled · Or write <span set:html={'sales&#64;desertrich.com'} /> directly
+  </p>
+  <p class="text-center text-xs text-blush-600">Confidential · Escrow.com protected transfer · Phoenix, Arizona</p>
+</form>
+
+<script>
+  const form = document.getElementById('inquiry-form');
+  const errorEl = document.getElementById('inq-error');
+
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (errorEl) {
+        errorEl.classList.add('hidden');
+        errorEl.textContent = '';
+      }
+
+      const data = new FormData(form);
+      const company = String(data.get('company') ?? '');
+      if (company) return;
+
+      const name = String(data.get('name') ?? '').trim();
+      const email = String(data.get('email') ?? '').trim();
+
+      if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (errorEl) {
+          errorEl.textContent = 'Please enter your name and a valid email address.';
+          errorEl.classList.remove('hidden');
+        }
+        return;
+      }
+
+      const subject = 'Acquisition Inquiry: cenphowax.com';
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Intended use: ${data.get('useCase') ?? ''}`,
+        `Offer / structure: ${data.get('budget') ?? ''}`,
+        '',
+        'Message:',
+        String(data.get('message') ?? '').trim() || '(not provided)',
+        '',
+        '— Sent from cenphowax.com',
+      ].join('\n');
+
+      const address = ['sales', 'desertrich.com'].join('@');
+      window.location.href = `mailto:${address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+</script>

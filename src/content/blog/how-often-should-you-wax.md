@@ -1,5 +1,5 @@
 ---
-title: "How Often Should You Wax? A Scheduling Guide That Actually Fits Real Life"
+title: "How Often Should You Wax?"
 description: "How to space waxing sessions by body area, why the 3–4 week window exists, and how hormones, seasons, and travel change the schedule."
 pubDate: 2026-09-14
 tags: ["scheduling", "regrowth", "aftercare"]

@@ -1,6 +1,6 @@
 ---
 import { services } from '../config/services';
-import { site } from '../config/site';
+import { site, domain, priceLabel, acquisitionMailto } from '../config/site';
 
 const currentYear = new Date().getFullYear();
 
@@ -11,6 +11,7 @@ const companyLinks = [
   { href: '/faq/', label: 'FAQ' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' },
+  { href: '/domain-for-sale/', label: 'Domain for Sale' },
 ];
 ---
 
@@ -20,22 +21,25 @@ const companyLinks = [
       <div class="mx-auto max-w-2xl text-center">
         <p class="mb-4 text-[11px] font-medium uppercase tracking-widestx text-champagne-400">Domain Available</p>
         <h2 class="font-display text-3xl font-semibold text-white sm:text-5xl">
-          Acquire <span class="italic text-champagne-400">cenphowax.com</span>
+          Acquire <span class="italic text-champagne-400">{domain.name}</span>
         </h2>
         <p class="mt-4 text-sm leading-relaxed text-blush-200 sm:text-base">
-          A compact, memorable name for a Central Phoenix Brazilian wax studio — city, neighborhood, and service in one word.
+          A compact, memorable name for a Central Phoenix Brazilian wax studio — city, neighborhood, and service in one
+          word. The site ships with it: a complete, indexed content property ready to rebrand.
         </p>
         <p class="mt-6 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
           <span class="text-champagne-400">$</span>50,000
         </p>
-        <p class="mt-2 text-xs uppercase tracking-widestx text-blush-400">Asking price</p>
+        <p class="mt-2 text-xs uppercase tracking-widestx text-blush-400">Asking price · {domain.escrow}</p>
         <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a href="mailto:sales@desertrich.com?subject=Domain%20Inquiry%3A%20cenphowax.com" class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-champagne-400 px-7 py-3 text-sm font-medium text-blush-950 hover:bg-champagne-500 sm:w-auto">
-            sales@desertrich.com
+          <a href={acquisitionMailto} class="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-champagne-400 px-7 py-3 text-sm font-semibold text-blush-950 hover:bg-champagne-500 sm:w-auto">
+            {site.email}
           </a>
-          <span class="text-sm text-blush-300">Serious inquiries only</span>
+          <a href={domain.salePage} class="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/30 px-7 py-3 text-sm font-medium text-white hover:bg-white/10 sm:w-auto">
+            Acquisition details
+          </a>
         </div>
-        <p class="mt-5 text-xs text-blush-400">Confidential. Response within 1–2 business days.</p>
+        <p class="mt-5 text-xs text-blush-400">Confidential · Serious inquiries only · Response within 1–2 business days</p>
       </div>
     </div>
   </div>
@@ -48,34 +52,34 @@ const companyLinks = [
         <p class="mt-4 text-xs leading-relaxed text-blush-400">
           Hard-wax Brazilian and body waxing by appointment, serving {site.neighborhoods}.
         </p>
-        <a href={`mailto:${site.email}`} class="mt-3 inline-block text-xs text-champagne-400 hover:text-champagne-200">{site.email}</a>
+        <a href={`mailto:${site.email}`} class="mt-3 inline-flex min-h-8 items-center text-xs text-champagne-400 hover:text-champagne-200">{site.email}</a>
       </div>
 
       <div>
         <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-400">Services</p>
-        <ul class="mt-4 space-y-2 text-sm text-blush-200">
+        <ul class="mt-4 space-y-1 text-sm text-blush-200">
           {
             serviceLinks.map((service) => (
               <li>
-                <a href={`/services/${service.slug}/`} class="transition hover:text-champagne-400">
+                <a href={`/services/${service.slug}/`} class="inline-flex min-h-8 items-center transition hover:text-champagne-400">
                   {service.name}
                 </a>
               </li>
             ))
           }
           <li>
-            <a href="/services/" class="transition hover:text-champagne-400">All services →</a>
+            <a href="/services/" class="inline-flex min-h-8 items-center transition hover:text-champagne-400">All services →</a>
           </li>
         </ul>
       </div>
 
       <div>
         <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-400">Studio</p>
-        <ul class="mt-4 space-y-2 text-sm text-blush-200">
+        <ul class="mt-4 space-y-1 text-sm text-blush-200">
           {
             companyLinks.map((link) => (
               <li>
-                <a href={link.href} class="transition hover:text-champagne-400">
+                <a href={link.href} class="inline-flex min-h-8 items-center transition hover:text-champagne-400">
                   {link.label}
                 </a>
               </li>
@@ -86,21 +90,21 @@ const companyLinks = [
 
       <div>
         <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-400">Guides</p>
-        <ul class="mt-4 space-y-2 text-sm text-blush-200">
-          <li><a href="/blog/brazilian-wax-central-phoenix/" class="transition hover:text-champagne-400">Brazilian wax in Central Phoenix</a></li>
-          <li><a href="/blog/hard-wax-vs-soft-wax/" class="transition hover:text-champagne-400">Hard wax vs soft wax</a></li>
-          <li><a href="/blog/first-brazilian-wax-what-to-expect/" class="transition hover:text-champagne-400">Your first Brazilian wax</a></li>
-          <li><a href="/blog/" class="transition hover:text-champagne-400">All guides →</a></li>
+        <ul class="mt-4 space-y-1 text-sm text-blush-200">
+          <li><a href="/blog/brazilian-wax-central-phoenix/" class="inline-flex min-h-8 items-center transition hover:text-champagne-400">Brazilian wax in Central Phoenix</a></li>
+          <li><a href="/blog/hard-wax-vs-soft-wax/" class="inline-flex min-h-8 items-center transition hover:text-champagne-400">Hard wax vs soft wax</a></li>
+          <li><a href="/blog/first-brazilian-wax-what-to-expect/" class="inline-flex min-h-8 items-center transition hover:text-champagne-400">Your first Brazilian wax</a></li>
+          <li><a href="/blog/" class="inline-flex min-h-8 items-center transition hover:text-champagne-400">All guides →</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-10 border-t border-white/10 pt-6">
-      <p class="max-w-3xl text-xs leading-relaxed text-blush-500">
+    <div class="mt-10 border-t border-white/10 pt-6 pb-24 md:pb-6">
+      <p class="max-w-3xl text-xs leading-relaxed text-blush-400">
         Educational information only — not a substitute for professional skincare or medical advice. Individual results
         vary. Services, availability, and pricing are confirmed at booking.
       </p>
-      <div class="mt-4 flex flex-col gap-2 text-xs text-blush-500 sm:flex-row sm:items-center sm:justify-between">
+      <div class="mt-4 flex flex-col gap-2 text-xs text-blush-400 sm:flex-row sm:items-center sm:justify-between">
         <p>© {currentYear} CenPho Wax. All rights reserved.</p>
         <p>Central Phoenix, AZ · By appointment</p>
       </div>

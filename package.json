@@ -9,6 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "seo:indexnow": "node scripts/indexnow.mjs",
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {

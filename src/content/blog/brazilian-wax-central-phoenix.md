@@ -1,5 +1,5 @@
 ---
-title: "Brazilian Wax in Central Phoenix: What to Know Before You Book"
+title: "Brazilian Wax in Central Phoenix Guide"
 description: "A practical guide to Brazilian waxing in Central Phoenix — hard wax technique, timing around desert heat, prep, and what results actually last."
 pubDate: 2026-09-08
 tags: ["brazilian-wax", "phoenix", "hard-wax"]

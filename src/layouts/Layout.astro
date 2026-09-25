@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import { site } from '../config/site';
+import { site, domain, priceLabel, sameAs } from '../config/site';
+import StickyCta from '../components/StickyCta.astro';
 
 interface Props {
   title?: string;
@@ -19,15 +20,15 @@ const POSTER =
 const defaultCanonical = new URL(Astro.url.pathname, 'https://cenphowax.com').href;
 
 const {
-  title = 'CenPho Wax | Central Phoenix Brazilian Wax Studio',
+  title = 'CenPho Wax | Central Phoenix Brazilian Wax & Domain for Sale',
   description =
-    'Hard-wax Brazilian and body waxing in Central Phoenix. A quiet, appointment-led studio serving Arcadia, Midtown, and downtown Phoenix.',
+    'Hard-wax Brazilian and body waxing in Central Phoenix, serving Arcadia, Midtown, and downtown Phoenix. cenphowax.com is available for acquisition — asking $50,000.',
   ogImage = POSTER,
   canonical = defaultCanonical,
   robots = 'index, follow, max-image-preview:large, max-snippet:-1',
   schemas = [],
   datePublished = '2026-09-12',
-  dateModified = '2026-09-22',
+  dateModified = '2026-09-25',
 } = Astro.props;
 
 const siteName = site.name;
@@ -64,6 +65,38 @@ const businessSchema = {
   },
 };
 
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${site.url}/#organization`,
+  name: siteName,
+  url: site.url,
+  logo: `${site.url}/favicon.svg`,
+  email: site.email,
+  sameAs,
+  description: `Publisher of ${site.url} — a Central Phoenix waxing resource and premium domain listing.`,
+};
+
+const domainOfferSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: domain.name,
+  category: 'Domain name',
+  description: `${domain.name} — premium exact-match .com domain for a Central Phoenix Brazilian wax studio. ${domain.status}.`,
+  url: site.url,
+  brand: { '@type': 'Brand', name: domain.name },
+  offers: {
+    '@type': 'Offer',
+    url: new URL(domain.salePage, site.url).href,
+    price: String(domain.price),
+    priceCurrency: domain.priceCurrency,
+    priceValidUntil: domain.priceValidUntil,
+    availability: 'https://schema.org/InStock',
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: { '@type': 'Organization', name: domain.seller, email: site.email },
+  },
+};
+
 const baseSchemas: Record<string, unknown>[] = [
   {
     '@context': 'https://schema.org',
@@ -71,6 +104,8 @@ const baseSchemas: Record<string, unknown>[] = [
     name: siteName,
     url: site.url,
     description,
+    inLanguage: 'en-US',
+    publisher: { '@id': `${site.url}/#organization` },
   },
   {
     '@context': 'https://schema.org',
@@ -89,7 +124,9 @@ const baseSchemas: Record<string, unknown>[] = [
         'Hard-wax Brazilian services designed for sensitive areas, with smooth results lasting 3 to 4 weeks.',
     },
   },
+  organizationSchema,
   businessSchema,
+  domainOfferSchema,
   ...schemas,
 ];
 ---
@@ -109,9 +146,24 @@ const baseSchemas: Record<string, unknown>[] = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
     />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+      />
+    </noscript>
+
+    <link rel="alternate" type="application/rss+xml" title={`${siteName} guides`} href="/rss.xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={pageUrl} />
@@ -158,6 +210,13 @@ const baseSchemas: Record<string, unknown>[] = [
     }
   </head>
   <body class="min-h-screen flex flex-col">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-blush-950 focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-white"
+    >
+      Skip to content
+    </a>
     <slot />
+    <StickyCta />
   </body>
 </html>

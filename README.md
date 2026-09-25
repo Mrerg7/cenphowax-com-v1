@@ -46,6 +46,27 @@ https://cenphowax.com/contact/?utm_source=google&utm_medium=organic&utm_campaign
 
 Rules: never mix `GBP`/`gbp` casing (GA4 treats them as different sources); native Call/Directions buttons cannot be UTMed — count those in GBP Performance instead. When you have a GA4 measurement ID, set `ga4Id` in `src/config/site.ts` and gtag fires site-wide; view results in GA4 → Reports → Acquisition → Traffic acquisition (filter `Session campaign = gbp`).
 
+## Domain sale funnel (conversion)
+
+The site exists to sell `cenphowax.com` for **$50,000**. Every page carries the funnel:
+
+- **Header strip** — sitewide "cenphowax.com is for sale — $50,000" bar linking to `/domain-for-sale/`
+- **Hero CTA** — "Acquire this domain" is the primary button on the homepage
+- **`/domain-for-sale/`** — price, what ships with the name, 4-step escrow process, buyer FAQ (FAQPage JSON-LD), and a confidential inquiry form (mailto to `sales@desertrich.com`)
+- **Sticky mobile CTA** — appears after 360px of scroll with price + Details + Inquire
+- **Homepage `#brand` section** — price card with "View acquisition details" and "Make an offer"
+- **Footer acquisition block** — price, escrow copy, mailto and details CTAs (44px tap targets)
+- **Contact page** — domain inquiry card pointing at `/domain-for-sale/`
+
+Offer/price details live in `src/config/site.ts` (`domain`, `priceLabel`, `acquisitionMailto`) so the visible price and the `Product`/`Offer` JSON-LD never drift apart.
+
+## SEO / DA
+
+- **Structured data (JSON-LD):** `WebSite`, `WebPage`, `Organization` (with `sameAs`), `BeautySalon`, `Product` + `Offer` ($50,000, matching visible price), `BreadcrumbList`, `Service`, `FAQPage`, `HowTo`, `Article`
+- **Indexable surface:** 22 pages, canonical trailing-slash URLs, XML sitemap (`/sitemap-index.xml`), `robots.txt`, RSS (`/rss.xml`), `llms.txt`, `humans.txt`, `security.txt` (+ `/.well-known/`), IndexNow key + `npm run seo:indexnow`
+- **Worker (`src/worker.js`):** www/http → apex 301, legacy WordPress paths → `/`, `/sitemap.xml` + `/wp-sitemap.xml` → sitemap index, `/404` → `/`, HSTS/X-Frame-Options/Permissions-Policy/Referrer-Policy on every response
+- **Title/description:** all pages ≤ 60 chars, keyword-led; homepage targets "Central Phoenix Brazilian Wax" + "Domain for Sale"
+
 ## Local development
 
 ```bash

@@ -31,7 +31,7 @@ const schema = {
   <Header />
   <Breadcrumbs items={[{ name: 'Pricing', path: '/pricing/' }]} />
 
-  <main class="flex-1">
+  <main id="main-content" class="flex-1">
     <section class="section-padding bg-white">
       <div class="container-narrow">
         <div class="mx-auto max-w-2xl text-center">
@@ -58,7 +58,7 @@ const schema = {
                 services.map((service) => (
                   <tr>
                     <td class="px-5 py-4">
-                      <a href={`/services/${service.slug}/`} class="font-medium text-blush-950 hover:text-champagne-500">
+                      <a href={`/services/${service.slug}/`} class="inline-flex min-h-10 items-center font-medium text-blush-950 hover:text-champagne-700">
                         {service.name}
                       </a>
                     </td>

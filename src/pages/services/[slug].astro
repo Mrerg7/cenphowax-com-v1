@@ -60,7 +60,7 @@ const related = service.related.map((slug) => getService(slug)!).filter(Boolean)
     ]}
   />
 
-  <main class="flex-1">
+  <main id="main-content" class="flex-1">
     <section class="section-padding bg-white">
       <div class="container-narrow grid gap-12 lg:grid-cols-3">
         <div class="lg:col-span-2">
@@ -142,7 +142,7 @@ const related = service.related.map((slug) => getService(slug)!).filter(Boolean)
                 <a href={`/services/${item.slug}/`} class="card group transition hover:border-champagne-400/60">
                   <div class="flex items-baseline justify-between gap-3">
                     <h3 class="font-display text-xl font-semibold text-blush-950">{item.name}</h3>
-                    <span class="font-display text-lg font-semibold text-champagne-500">${item.price}</span>
+                    <span class="font-display text-lg font-semibold text-champagne-700">${item.price}</span>
                   </div>
                   <p class="mt-2 text-sm leading-relaxed text-blush-700">{item.summary}</p>
                 </a>

@@ -1,5 +1,5 @@
 ---
-title: "Waxing in Phoenix Summers: Sun, Pools, Sweat, and Smart Scheduling"
+title: "Waxing in Phoenix Summers"
 description: "How to wax through a Central Phoenix summer — timing sessions around heat and sun, protecting fresh skin from chlorine, and stopping ingrowns before they start."
 pubDate: 2026-09-16
 tags: ["phoenix", "summer", "aftercare"]

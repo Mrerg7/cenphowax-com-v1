@@ -11,20 +11,28 @@ import Footer from '../components/Footer.astro';
   robots="noindex, follow"
 >
   <Header />
-  <main class="flex-1">
+  <main id="main-content" class="flex-1">
     <section class="container-narrow flex flex-col items-center justify-center py-24 text-center sm:py-32">
-      <p class="text-[11px] font-medium uppercase tracking-widestx text-champagne-400">Error 404</p>
+      <p class="text-[11px] font-medium uppercase tracking-widestx text-champagne-700">Error 404</p>
       <h1 class="mt-4 font-display text-4xl font-semibold text-blush-950 sm:text-5xl">Page not found</h1>
       <p class="mt-4 max-w-md text-sm leading-relaxed text-blush-700 sm:text-base">
-        The page you are looking for does not exist or has been moved. cenphowax.com is a single-page
-        domain listing — everything we publish lives on the homepage.
+        The page you are looking for does not exist or has been moved. Start from the homepage, or jump straight to
+        services, pricing, or the domain listing.
       </p>
-      <a
-        href="/"
-        class="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-blush-800 px-7 py-3 text-sm font-medium text-white hover:bg-blush-700"
-      >
-        Back to homepage
-      </a>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a
+          href="/"
+          class="inline-flex min-h-11 items-center justify-center rounded-full bg-blush-800 px-7 py-3 text-sm font-medium text-white hover:bg-blush-700"
+        >
+          Back to homepage
+        </a>
+        <a
+          href="/domain-for-sale/"
+          class="inline-flex min-h-11 items-center justify-center rounded-full border border-blush-300 px-7 py-3 text-sm font-medium text-blush-900 hover:bg-blush-100"
+        >
+          Domain for sale
+        </a>
+      </div>
     </section>
   </main>
   <Footer />

@@ -1,0 +1,12 @@
+/* TEAM */
+ Owner: Desert Rich
+ E-mail: sales@desertrich.com
+ Location: Phoenix, Arizona, USA
+ Website: https://cenphowax.com/
+
+/* SITE */
+ Last update: 2026/09/25
+ Language: en-US
+ Doctype: HTML5
+ IDE: Astro, Tailwind CSS, Cloudflare Workers Static Assets
+ Components: Astro static pages, JSON-LD structured data, XML sitemap, RSS

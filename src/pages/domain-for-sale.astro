@@ -1,0 +1,246 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import { site, domain, priceLabel, acquisitionMailto } from '../config/site';
+
+const included = [
+  {
+    title: 'The domain itself',
+    body: 'cenphowax.com — a clean, hyphen-free .com with no characters to spell out over the phone.',
+  },
+  {
+    title: 'A complete content site',
+    body: 'Eighteen indexable pages: services, pricing, FAQ, aftercare, about, contact, and a six-post guide library.',
+  },
+  {
+    title: 'SEO groundwork',
+    body: 'Canonical URLs, XML sitemap, robots.txt, JSON-LD structured data, RSS, and clean static markup ready to reindex under a new brand.',
+  },
+  {
+    title: 'Fast static hosting setup',
+    body: 'Astro build served from Cloudflare Workers Static Assets — the deploy pipeline transfers with the sale.',
+  },
+];
+
+const steps = [
+  {
+    title: '1 · Inquiry',
+    body: 'Email sales@desertrich.com with your name, intended use, and offer. Responses come within 1–2 business days.',
+  },
+  {
+    title: '2 · Agreement',
+    body: 'Terms are confirmed in writing — price, what transfers, and the timeline. No brokers, no auctions.',
+  },
+  {
+    title: '3 · Escrow funding',
+    body: 'Escrow.com holds your payment while both sides complete the transfer. Funds release only when you control the domain.',
+  },
+  {
+    title: '4 · Transfer',
+    body: 'Registrar and DNS control move to your account — typically completed within 1–5 business days of funding.',
+  },
+];
+
+const buyerFaq = [
+  {
+    q: `Is the ${priceLabel} asking price firm?`,
+    a: `The list price is ${priceLabel} USD. Serious offers are reviewed and answered within 1–2 business days; structures such as installment payments can be discussed for qualified buyers.`,
+  },
+  {
+    q: 'How is the purchase protected?',
+    a: 'Every sale runs through Escrow.com. Your funds are held by a licensed escrow agent and released only after the domain has been transferred into your registrar account.',
+  },
+  {
+    q: 'How long does a transfer take?',
+    a: 'Once terms are agreed and escrow is funded, most .com transfers complete within 1 to 5 business days, depending on registrar unlock timing and the losing registrar’s approval window.',
+  },
+  {
+    q: 'What exactly do I receive?',
+    a: 'The domain name plus the complete website source: all pages, blog content, SEO configuration, and the Cloudflare deployment setup documented in the repository.',
+  },
+  {
+    q: 'Can I rebrand or replace the site?',
+    a: 'Yes. The domain is what you are buying — the included site is a ready-made starting point you can keep, restyle, or replace entirely.',
+  },
+  {
+    q: 'Why is this domain valuable?',
+    a: 'cenphowax.com is an exact-match geo + category .com: "CenPho" is recognizable Central Phoenix shorthand, and "wax" names the service. Short, pronounceable, category-relevant names in major US metros are finite and rarely re-registered once dropped.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: buyerFaq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<Layout
+  title={`${domain.name} Domain for Sale — $50,000 | CenPho Wax`}
+  description={`Buy ${domain.name} — exact-match Central Phoenix Brazilian wax .com with a complete, indexed site included. ${priceLabel} USD, Escrow.com protected. Inquire now.`}
+  schemas={[faqSchema]}
+>
+  <Header />
+  <Breadcrumbs items={[{ name: 'Domain for Sale', path: '/domain-for-sale/' }]} />
+
+  <main id="main-content" class="flex-1">
+    <section class="section-padding bg-blush-950">
+      <div class="container-narrow grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div>
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-champagne-400">Premium domain · Available now</p>
+          <h1 class="mt-3 font-display text-4xl font-semibold leading-tight text-white sm:text-6xl">
+            {domain.name} <span class="italic text-champagne-400">is for sale</span>
+          </h1>
+          <p class="mt-5 max-w-xl text-base leading-relaxed text-blush-200 sm:text-lg">
+            An exact-match, hyphen-free .com for a Central Phoenix Brazilian wax studio — city, neighborhood, and service
+            compressed into one word, with a complete content site ready to launch under your brand.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={acquisitionMailto}
+              class="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-champagne-400 px-7 py-3 text-sm font-semibold text-blush-950 transition hover:bg-champagne-500 sm:w-auto"
+            >
+              Inquire about this domain
+            </a>
+            <a
+              href="/"
+              class="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-white/30 px-7 py-3 text-sm font-medium text-white transition hover:bg-white/10 sm:w-auto"
+            >
+              See the live site
+            </a>
+          </div>
+          <p class="mt-5 text-xs text-blush-400">
+            {domain.escrow} · Confidential · Response within 1–2 business days
+          </p>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center sm:p-8">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-champagne-400">Asking price</p>
+          <p class="mt-3 font-display text-5xl font-semibold tracking-tight text-white sm:text-6xl">
+            <span class="text-champagne-400">$</span>50,000
+          </p>
+          <p class="mt-2 text-xs uppercase tracking-widestx text-blush-400">USD · {domain.status}</p>
+          <dl class="mt-6 space-y-3 text-left text-sm">
+            <div class="flex items-baseline justify-between gap-4 border-b border-white/10 pb-3">
+              <dt class="text-blush-400">Domain</dt>
+              <dd class="font-medium text-white">{domain.name}</dd>
+            </div>
+            <div class="flex items-baseline justify-between gap-4 border-b border-white/10 pb-3">
+              <dt class="text-blush-400">Escrow</dt>
+              <dd class="font-medium text-white">Escrow.com</dd>
+            </div>
+            <div class="flex items-baseline justify-between gap-4">
+              <dt class="text-blush-400">Seller</dt>
+              <dd class="font-medium text-white">{domain.seller}</dd>
+            </div>
+          </dl>
+          <a
+            href={acquisitionMailto}
+            class="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-blush-950 transition hover:bg-blush-100"
+          >
+            {site.email}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding bg-white">
+      <div class="container-narrow">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">What you get</p>
+          <h2 class="mt-3 font-display text-3xl font-semibold text-blush-950 sm:text-5xl">More than a name</h2>
+          <p class="mt-4 text-base leading-relaxed text-blush-800 sm:text-lg">
+            Most domain sales hand you a blank record. This one ships with the property already built, indexed, and
+            ready to rebrand.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-5 sm:grid-cols-2">
+          {
+            included.map((item) => (
+              <article class="card">
+                <h3 class="font-display text-2xl font-semibold text-blush-950">{item.title}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-blush-700">{item.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding bg-blush-50">
+      <div class="container-narrow">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">The process</p>
+          <h2 class="mt-3 font-display text-3xl font-semibold text-blush-950 sm:text-5xl">Four steps, escrow protected</h2>
+        </div>
+
+        <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            steps.map((step) => (
+              <li class="card">
+                <h3 class="font-display text-xl font-semibold text-blush-950">{step.title}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-blush-700">{step.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section-padding bg-white">
+      <div class="container-narrow grid gap-12 lg:grid-cols-2">
+        <div>
+          <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Buyer FAQ</p>
+          <h2 class="mt-3 font-display text-3xl font-semibold text-blush-950 sm:text-4xl">
+            Questions buyers ask first
+          </h2>
+          <dl class="mt-8 space-y-5">
+            {
+              buyerFaq.map((item) => (
+                <div class="card">
+                  <dt class="font-medium text-blush-950">{item.q}</dt>
+                  <dd class="mt-2 text-sm leading-relaxed text-blush-700">{item.a}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div id="inquiry" class="scroll-mt-32">
+          <div class="rounded-3xl border border-blush-100 bg-blush-50 p-6 sm:p-8">
+            <p class="text-[11px] font-medium uppercase tracking-widestx text-blush-600">Confidential inquiry</p>
+            <h2 class="mt-3 font-display text-3xl font-semibold text-blush-950 sm:text-4xl">Make an offer</h2>
+            <p class="mt-3 text-sm leading-relaxed text-blush-700">
+              Tell us who you are, what you plan to build, and your offer. Every inquiry is answered personally.
+            </p>
+            <div class="mt-7">
+              <InquiryForm />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-blush-100 bg-blush-50 py-10 sm:py-12">
+      <div class="container-narrow text-center">
+        <p class="mx-auto max-w-2xl text-xs leading-relaxed text-blush-600 sm:text-sm">
+          cenphowax.com is offered for sale by its owner. The studio content on this site is illustrative of the brand
+          potential and is not an offer to provide waxing services.
+        </p>
+        <a href="/" class="mt-6 inline-flex min-h-11 items-center justify-center rounded-full border border-blush-300 px-7 py-3 text-sm font-medium text-blush-900 hover:bg-blush-100">
+          ← Back to the homepage
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

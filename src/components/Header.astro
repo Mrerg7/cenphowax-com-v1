@@ -1,4 +1,6 @@
 ---
+import { domain, priceLabel } from '../config/site';
+
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' || path === '/index.html' : path.startsWith(href);
@@ -8,14 +10,25 @@ const links = [
   { href: '/pricing/', label: 'Pricing' },
   { href: '/faq/', label: 'FAQ' },
   { href: '/blog/', label: 'Guides' },
-  { href: '/about/', label: 'About' },
+  { href: '/domain-for-sale/', label: 'For Sale' },
 ];
+const mobileOnlyLinks = [{ href: '/about/', label: 'About' }];
 ---
 
-<header class="sticky top-0 z-50 border-b border-blush-100/70 bg-blush-50/85 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-blush-100/70 bg-blush-50/90 backdrop-blur-md">
+  <a
+    href={domain.salePage}
+    class="block bg-blush-950 text-center text-[11px] font-medium tracking-wide text-blush-100 transition hover:bg-blush-900 sm:text-xs"
+  >
+    <span class="mx-auto flex min-h-8 items-center justify-center gap-2 px-4 py-1.5">
+      <span class="text-champagne-400">{domain.name} is for sale — {priceLabel}</span>
+      <span class="hidden text-blush-300 sm:inline">View acquisition details →</span>
+    </span>
+  </a>
+
   <div class="container-narrow">
     <div class="flex h-14 items-center justify-between sm:h-16">
-      <a href="/" class="flex items-center gap-3" aria-label="CenPho Wax home">
+      <a href="/" class="flex items-center gap-3" aria-label="C CenPho Wax Central Phoenix — homepage">
         <span class="flex h-8 w-8 items-center justify-center rounded-full border border-champagne-400/50 bg-blush-950 text-champagne-400 sm:h-9 sm:w-9">
           <span class="font-display text-sm font-semibold">C</span>
         </span>
@@ -25,14 +38,14 @@ const links = [
         </span>
       </a>
 
-      <nav class="hidden items-center gap-6 md:flex lg:gap-7" aria-label="Main navigation">
+      <nav class="hidden items-center gap-5 md:flex lg:gap-7" aria-label="Main navigation">
         {
           links.map((link) => (
             <a
               href={link.href}
               aria-current={isActive(link.href) ? 'page' : undefined}
               class:list={[
-                'text-sm font-medium transition',
+                'whitespace-nowrap text-sm font-medium transition',
                 isActive(link.href) ? 'text-blush-950 underline decoration-champagne-500 decoration-2 underline-offset-8' : 'text-blush-800 hover:text-blush-600',
               ]}
             >
@@ -40,7 +53,7 @@ const links = [
             </a>
           ))
         }
-        <a href="/contact/" class="rounded-full bg-blush-800 px-4 py-2 text-xs font-medium tracking-wide text-white hover:bg-blush-700">Book / Contact</a>
+        <a href="/contact/" class="inline-flex min-h-10 items-center rounded-full bg-blush-800 px-4 text-xs font-medium tracking-wide text-white hover:bg-blush-700">Book / Contact</a>
       </nav>
 
       <button type="button" id="mobile-menu-btn" class="inline-flex h-10 w-10 items-center justify-center rounded-full text-blush-800 hover:bg-blush-100 md:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">
@@ -54,7 +67,7 @@ const links = [
   <div id="mobile-menu" class="hidden border-t border-blush-100 bg-blush-50 md:hidden">
     <div class="container-narrow space-y-1 py-3">
       {
-        links.map((link) => (
+        [...links, ...mobileOnlyLinks].map((link) => (
           <a
             href={link.href}
             aria-current={isActive(link.href) ? 'page' : undefined}
@@ -68,6 +81,9 @@ const links = [
         ))
       }
       <a href="/contact/" class="mt-2 block rounded-full bg-blush-800 px-4 py-3 text-center text-sm font-medium text-white">Book / Contact</a>
+      <a href={domain.salePage} class="mt-2 block rounded-full bg-champagne-400 px-4 py-3 text-center text-sm font-semibold text-blush-950">
+        Acquire {domain.name} — {priceLabel}
+      </a>
     </div>
   </div>
 </header>
