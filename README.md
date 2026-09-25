@@ -66,6 +66,8 @@ Offer/price details live in `src/config/site.ts` (`domain`, `priceLabel`, `acqui
 - **Indexable surface:** 22 pages, canonical trailing-slash URLs, XML sitemap (`/sitemap-index.xml`), `robots.txt`, RSS (`/rss.xml`), `llms.txt`, `humans.txt`, `security.txt` (+ `/.well-known/`), IndexNow key + `npm run seo:indexnow`
 - **Worker (`src/worker.js`):** www/http → apex 301, legacy WordPress paths → `/`, `/sitemap.xml` + `/wp-sitemap.xml` → sitemap index, `/404` → `/`, HSTS/X-Frame-Options/Permissions-Policy/Referrer-Policy on every response
 - **Title/description:** all pages ≤ 60 chars, keyword-led; homepage targets "Central Phoenix Brazilian Wax" + "Domain for Sale"
+- **Fonts:** self-hosted Inter + Cormorant Garamond latin subsets in `public/fonts/` (the same variable files Google serves), `@font-face` with `font-display: swap` plus `<link rel="preload">` — no third-party font request
+- **Accessibility:** skip link, one visible `h1` per page, WCAG AA contrast on every text color, 44px primary tap targets
 
 ## Local development
 
