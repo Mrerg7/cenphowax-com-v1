@@ -42,6 +42,14 @@ function isLegacyQuery(searchParams) {
   });
 }
 
+function isImmutableAsset(pathname) {
+  return (
+    pathname.startsWith('/_astro/') ||
+    pathname.startsWith('/fonts/') ||
+    pathname.startsWith('/img/')
+  );
+}
+
 function redirect(location) {
   return new Response(null, {
     status: 301,
@@ -80,6 +88,9 @@ export default {
     const headers = new Headers(response.headers);
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
       headers.set(key, value);
+    }
+    if (response.ok && isImmutableAsset(url.pathname)) {
+      headers.set('Cache-Control', 'public, max-age=31536000, immutable');
     }
     return new Response(response.body, {
       status: response.status,

@@ -5,6 +5,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://cenphowax.com',
   output: 'static',
+  build: {
+    inlineStylesheets: 'always',
+  },
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap({
